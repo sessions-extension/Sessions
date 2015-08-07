@@ -1,8 +1,611 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>Sessions</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: -apple-system, 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+				background: gray no-repeat;
+				background-image: -webkit-radial-gradient(50% 100px, 444px 666px, #f8f8f8 100px, gray 666px);
+				background-image: radial-gradient(ellipse 444px 666px at 50% 100px, #f8f8f8 100px, gray 666px);
+				/* It is impossible to replicate the old gradient (below) with the new syntax (above).*/
+				background-image: -webkit-gradient(radial, 50% 100, 100, 50% 222, 666, from(#F8F8F8), to(gray));
+				background-size: 100% 1110px;
+			}
+			h3 {
+				color: #333;
+				font-size: 18px;
+				text-align: center;
+				margin-bottom: 1.5em;
+			}
+			h4 {
+				margin: 2.5em;
+				text-align: center;
+				font-weight: 500;
+			}
+			h6 {
+				text-align: center;
+				font-size: 12px;
+				font-weight: 500;
+			}
+			p {
+				color: #666;
+				margin: 1em 1em;
+				font-size: 14px;
+				line-height: 18px;
+			}
+			a:link, a:visited {
+				text-decoration: none;
+				color: #4F4F4F;
+				-webkit-transition: text-shadow .2s, color .2s;
+				transition: text-shadow .2s, color .2s;
+				-webkit-user-select: none;
+			}
+			h4 a {
+				border-radius: 13px;
+				background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(205, 205, 205)), to(rgb(235, 235, 235))) left top no-repeat;
+				background: -webkit-linear-gradient(rgb(205, 205, 205), rgb(235, 235, 235));
+				background: linear-gradient(rgb(205, 205, 205), rgb(235, 235, 235));
+				padding: 3px 16px;
+			}
+			h4 a:hover {
+				color: #efefef;
+				color: #f8f8f8;
+				text-shadow: 0 .2em .32em rgba(32, 32, 32, .4), 0 .1em .15em rgba(0, 0, 0, .4);
+			}
+			h4 a:hover:active {
+				background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(180, 180, 180)), to(rgb(235, 235, 235))) left top no-repeat;
+				background: -webkit-linear-gradient(rgb(180, 180, 180), rgb(235, 235, 235));
+				background: linear-gradient(rgb(180, 180, 180), rgb(235, 235, 235));
+				text-shadow:  0 .1em .1em rgba(0, 0, 0, .4);
+				color: white;
+				-webkit-transition: none;
+				transition: none;
+			}
+			h6 a:hover {
+				text-decoration: underline;
+			}
+			h6 a:hover:active {
+				color: #000;
+			}
+			#content {
+				max-width: 826px;
+				margin: 0px auto;
+				background: -webkit-gradient(linear, 0% 0%, 0% 888, from(rgba(248, 248, 248, 0)), to(rgba(248, 248, 248, .75))) left top no-repeat;
+				background: -webkit-linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
+				background: linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
+				padding: 40px 30px;
+				position: relative;
+			}
+			#logo {
+				width: 100px;
+				height: 100px;
+				margin: 10px auto;
+				background: url('logo.png') center no-repeat;
+			}
+			#slider {
+				position: relative;
+				padding: 0px;
+				outline: none;
+				height: 500px;
+				margin: 24px 56px 72px;
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+				-webkit-perspective-origin: 140% 25%;
+				perspective-origin: 140% 25%;
+				-webkit-perspective: 6px;
+				perspective: 6px;
+				-webkit-transition: -webkit-transform .4s;
+			}
+			#slider.initial {
+				-webkit-transform: scale(.85);
+				transform: scale(.85);
+			}
+			figure {
+				display: inline-block;
+				position: absolute;
+				margin-left: -480px;
+				top: 0;
+				left: 50%;
+				-webkit-transition: all .4s;
+				transition: all .4s;
+			}
+			figure:not(#return)::before {
+				content: '';
+				background-image: url('screens/unfocused-titlebar@1x.png');
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 960px;
+				height: 39px;
+				background-size: 960px 39px;
+			}
+			#return {
+				width: 964px;
+				height: 100%;
+				opacity: 0;
+				pointer-events: none;
+				-webkit-transition: all .4s;
+				transition: all .4s;
+			}
+			#return h1 {
+				width: 1.5em;
+				height: 1.5em;
+				line-height: 1.5em;
+				font-weight: 900;
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				-webkit-transform: translateY(-50%);
+				transform: translateY(-50%);
+				left: 100%;
+				margin: 0;
+				-webkit-user-select: none;
+				cursor: default;
+				border-radius: 50%;
+				pointer-events: none;
+				text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+				box-shadow: inset 0 1px 2px rgba(0, 0, 0, .5);
+				color: rgba(255, 255, 255, .5);
+				background: rgba(0, 0, 0, .1);
+			}
+			#return h1:hover {
+				color: white;
+				text-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+			}
+			#return h1:hover:active {
+				color: rgba(255, 255, 255, .4);
+				text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+				background: rgba(0, 0, 0, .15);
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, .5);
+			}
+			img {
+				border-radius: 5px;
+				box-shadow: 0 0px 1px rgba(0, 0, 0, .5);
+				-webkit-transition: box-shadow .3s;
+				transition: box-shadow .3s;
+				width: 960px;
+			}
+			figure:hover img {
+				box-shadow: 0 0px 1px rgba(0, 0, 0, .5), 0 2px 4px rgba(0, 0, 0, .535);
+			}
+			figcaption {
+				margin-top: .5em;
+				color: white;
+				text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+				text-align: center;
+				opacity: 0;
+				-webkit-transform: translateY(-100%);
+				transform: translateY(-100%);
+				-webkit-transition: all .7s;
+				transition: all .7s;
+			}
+			.slide1 figure:nth-of-type(1),
+			.slide2 figure:nth-of-type(2),
+			.slide3 figure:nth-of-type(3),
+			.slide4 figure:nth-of-type(4) {
+				-webkit-transform: translate3d(0%, 0%, 0%);
+				transform: translate3d(0%, 0%, 0%);
+			}
+			.initial figure:first-of-type::before,
+			.slide1 figure:nth-of-type(1)::before,
+			.slide2 figure:nth-of-type(2)::before,
+			.slide3 figure:nth-of-type(3)::before,
+			.slide4 figure:nth-of-type(4)::before {
+				visibility: hidden;
+			}
+			.slide1 figure:nth-of-type(1) img,
+			.slide2 figure:nth-of-type(2) img,
+			.slide3 figure:nth-of-type(3) img,
+			.slide4 figure:nth-of-type(4) img {
+				box-shadow: 0 0px 1px rgba(0, 0, 0, .5), 0 24px 48px rgba(0, 0, 0, .535);
+			}
+			.slide1 figure:nth-of-type(1) figcaption,
+			.slide2 figure:nth-of-type(2) figcaption,
+			.slide3 figure:nth-of-type(3) figcaption,
+			.slide4 figure:nth-of-type(4) figcaption {
+				opacity: 1;
+				-webkit-transform: none;
+				transform: none;
+			}
+			.slide1 figure:nth-of-type(2),
+			.slide2 figure:nth-of-type(3),
+			.slide3 figure:nth-of-type(4) {
+				-webkit-transform: translate3d(0, 0, -1px);
+				transform: translate3d(0, 0, -1px);
+			}
+			.slide1 figure:nth-of-type(3),
+			.slide2 figure:nth-of-type(4) {
+				-webkit-transform: translate3d(0, 0, -2px);
+				transform: translate3d(0, 0, -2px);
+			}
+			.slide1 figure:nth-of-type(4) {
+				-webkit-transform: translate3d(0, 0, -3px);
+				transform: translate3d(0, 0, -3px);
+			}
+			.slide2 figure:nth-of-type(1),
+			.slide3 figure:nth-of-type(2),
+			.slide4 figure:nth-of-type(3) {
+				-webkit-transform: translate3d(-1008px, 0, 0);
+				transform: translate3d(-1008px, 0, 0);
+			}
+			.slide3 figure:nth-of-type(1),
+			.slide4 figure:nth-of-type(2) {
+				-webkit-transform: translate3d(-2016px, 0, 0);
+				transform: translate3d(-2016px, 0, 0);
+			}
+			.slide4 figure:nth-of-type(1) {
+				-webkit-transform: translate3d(-3024px, 0, 0);
+				transform: translate3d(-3024px, 0, 0);
+			}
+			.slide4 #return {
+				opacity: 1;
+				-webkit-transform: translate3d(.5em, 0, 0);
+				transform: translate3d(.5em, 0, 0);
+			}
+			.slide4 #return h1 {
+				pointer-events: auto;
+			}
+			figure:nth-last-of-type(1) {
+				z-index: 1;
+			}
+			figure:nth-last-of-type(2) {
+				z-index: 2;
+			}
+			figure:nth-last-of-type(3) {
+				z-index: 3;
+			}
+			figure:nth-last-of-type(4) {
+				z-index: 4;
+			}
+			figure:nth-last-of-type(5) {
+				z-index: 5;
+			}
+			#changeToggle.header {
+				font-size: larger;
+			}
+			#changelog {
+				width: 80%;
+				margin: auto;
+				border: solid rgba(0, 0, 0, .1);
+				border-width: 1px 0;
+			}
+			#changelog:not(.show) {
+				display: none;
+			}
+			.change {
+				font-size: 14px;
+				color: #666;
+				padding: 1em;
+			}
+			.changeTitle {
+				font-size: 15px;
+				color: #444;
+			}
+			.changeTitle div {
+				width: 50%;
+				display: inline-block;
+			}
+			.version {
+				font-weight: bold;
+			}
+			.date {
+				text-align: right;
+			}
+			#tag {
+				position: absolute;
+				right: 2px;
+				bottom: 2px;
+				color: rgba(0, 0, 0, .2);
+				text-align: center;
+				font-size: smaller;
+			}
+			#tag span {
+				color: rgba(0, 0, 0, .3);
+			}
+			@media (-webkit-min-device-pixel-ratio: 2),
+					(min-resolution: 2dppx) {
+				#logo {
+					background: url('logo@2x.png') center no-repeat;
+					background-size: 100px 100px;
+				}
+				figure:not(#return)::before {
+					background-image: url('screens/unfocused-titlebar@2x.png');
+				}
+				img {
+					box-shadow: 0 0px 1px rgba(0, 0, 0, .9);
+				}
+				figure:hover img {
+					box-shadow: 0 0px 1px rgba(0, 0, 0, .9), 0 2px 4px rgba(0, 0, 0, .535);
+				}
+				.slide1 figure:nth-of-type(1) img,
+				.slide2 figure:nth-of-type(2) img,
+				.slide3 figure:nth-of-type(3) img,
+				.slide4 figure:nth-of-type(4) img {
+					box-shadow: 0 0px 1px rgba(0, 0, 0, .9), 0 24px 48px rgba(0, 0, 0, .535);
+				}
+			}
+		</style>
 	</head>
 	<body>
+		<div id="content">
+			<div id="logo"></div>
+			<h3>Sessions</h3>
+			<p>Sessions is a browser extension for managing your Safari tabs and history.</p>
+			<p>It can be difficult to keep up with the torrent of new information on the internet. If you have ever found yourself overwhelmed by open tabs but reluctant to abandon them, needing to note a link for later, or simply desiring a mental context switch to a new set of tabs without the distractions of the old ones, Sessions is here to help.</p>
+			<div id="slider" tabindex="1" class="initial">
+				<figure data-slide="slide1">
+					<img src="screens/manager@1x.png" srcset="screens/manager@2x.png 2x" />
+					<figcaption>
+						A fast, intuitive interface.
+					</figcaption>
+				</figure>
+				<figure data-slide="slide2">
+					<img src="screens/overview@1x.png" srcset="screens/overview@2x.png 2x" />
+					<figcaption>
+						Useful functions for both saved and live sessions.
+					</figcaption>
+				</figure>
+				<figure data-slide="slide3">
+					<img src="screens/search@1x.png" srcset="screens/search@2x.png 2x" />
+					<figcaption>
+						Powerful tools to search and organize your tabs.
+					</figcaption>
+				</figure>
+				<figure data-slide="slide4">
+					<img src="screens/export@1x.png" srcset="screens/export@2x.png 2x" />
+					<figcaption>
+						Save and restore. Drag and drop. Import and export.
+					</figcaption>
+				</figure>
+				<figure id="return" data-slide="slide1">
+					<h1 title="Back to start">&#x21ba;</h1>
+				</figure>
+			</div>
+			<p>Sessions keeps track of your open windows and tabs for you, so that with the click of a button you can save a snapshot of your session at any time and start fresh, secure in the knowledge that you can return to your tabs at your future leisure.</p>
+			<p>Sessions is efficient, lightweight, and gets out of your way; with automatic backups on startup enabled, you do not have to think about it until you need it. Every aspect of the design has been carefully considered and infused with familiar Mac sensibilities. And with Sessions's rich tab management and searching abilities, losing a link may be a thing of the past.</p>
+			<h4>
+				<a href="Sessions.safariextz" title="Sessions requires Safari 5.1 or later">Download</a>
+			</h4>
+			<h6>
+				<a href="#" id="changeToggle">Changelog</a>
+			</h6>
+			<div id="changelog"></div>
+			<h6>
+				<!-- http://hivelogic.com/enkoder/ -->
+				<script>
+					var x="function f(x){var i,o=\"\",ol=x.length,l=ol;while(x.charCodeAt(l/13)!" +
+					"=92){try{x+=x;l+=l;}catch(e){}}for(i=l-1;i>=0;i--){o+=x.charAt(i);}return o" +
+					".substr(0,ol);}f(\")82,\\\"CGM\\\\\\\\VM320\\\\^L330\\\\r\\\\410\\\\030\\\\" +
+					"500\\\\500\\\\*VE:G8^700\\\\r\\\\420\\\\6*}~700\\\\76;y:<5>5120\\\\> '>\\\"" +
+					"\\\\.>1-i5++*12%L400\\\\RHWSXU520\\\\j010\\\\RV@Y020\\\\N220\\\\710\\\\400\\"+
+					"\\EFL\\\\\\\\NTRn\\\\WLDMj}rx\\\"(f};o nruter};))++y(^)i(tAedoCrahc.x(edoCr" +
+					"ahCmorf.gnirtS=+o;721=%y{)++i;l<i;0=i(rof;htgnel.x=l,\\\"\\\"=o,i rav{)y,x(" +
+					"f noitcnuf\")"                                                               ;
+					while(x=eval(x));
+				</script>
+			</h6>
+			<div id="tag">by <span>David Yoo</span></div>
+		</div>
+		<script>
+			window.addEventListener('DOMContentLoaded', function () {
+				'use strict';
+
+				var changelog = document.getElementById('changelog'),
+					changes = [
+					{
+						version: '1.4',
+						date: '2015/08/07',
+						changes: [
+							'New feature: Favorites. Sessions marked as Favorites are added to a new, reorderable list in the sidebar, and are exempt from duplicate tab removal.',
+							'New feature: Recent autosaves. A configurable number of recent session snapshots can be browsed, restored, and saved.',
+							'Search terms are now delimited by whitespace. Literal phrases may be placed in double quotes.',
+							'Search results are now highlighted.',
+							'The search pane can be dragged to the sides to reveal more of the session behind it.',
+							'Added ability to create a new session from dragged tabs and windows.',
+							'Type-to-search added to overview, alongside more extensive keyboard support in general.',
+							'Deleting tabs from a long window will no longer cause it to scroll.',
+							'Addressed incompatibilities with newer versions of Safari.',
+							'Improvements to documentation.',
+							'Visual tweaks throughout.',
+							'Several small bugs squashed.',
+						],
+					},
+					{
+						version: '1.3.0.2',
+						date: '2012/07/30',
+						changes: [
+							'Retina display support.',
+							'Autosave is disabled during Private Browsing in Safari 6.',
+						],
+					},
+					{
+						version: '1.3.0.1',
+						date: '2012/05/21',
+						changes: [
+							'Global search results now load lazily.',
+							'Minor bugfixes.',
+						],
+					},
+					{
+						version: '1.3',
+						date: '2012/05/14',
+						changes: [
+							'Added tab overview popover.',
+							'Drag and drop support totally rewritten and expanded.',
+							'Search functionality rewritten.',
+							'Export and partial import of Netscape HTML Bookmark format.',
+							'Modal popup styles unified.',
+							'Preferences consolidated; hotkey finally customizable.',
+							'Default startup behavior changed to "no action".',
+							'Improved support for large font sizes and characters.',
+							'Removed notification for unloaded tabs.',
+							'Sundry bugfixes, optimizations, alterations, and improvements.',
+						],
+					},
+					{
+						version: '1.2.0.2',
+						date: '2012/02/17',
+						changes: [
+							'Database quota increased from 5MB to 100MB.',
+							'Rendering glitch under Safari 5.2 beta fixed.',
+						],
+					},
+					{
+						version: '1.2.0.1',
+						date: '2011/11/29',
+						changes: [
+							'Modification to avoid hardware accelerated flashing under Safari 5.1.2.',
+							'Date format for autosaved sessions shortened.',
+							'Sidebar button click targets reduced.',
+							'Very minor fixes and tweaks.',
+							'Help page updated.',
+						],
+					},
+					{
+						version: '1.2',
+						date: '2011/08/31',
+						changes: [
+							'Numerous changes for Safari 5.1 compatibility; Safari 5.0 support ended.',
+							'Graphical adjustments.',
+						],
+					},
+					{
+						version: '1.1.4',
+						date: '2010/11/09',
+						changes: [
+							'Help page added to address frequently asked questions.',
+							'Tabs can now be dragged to create new windows within a session.',
+							'Tabs can now be dragged into other saved sessions.',
+							'Saved sessions can be deleted with the Command + Delete shortcut.',
+						],
+					},
+					{
+						version: '1.1.3',
+						date: '2010/09/02',
+						changes: [
+							'Implemented internal database versioning.',
+							'The sidebar is now resizable and can be navigated by keyboard.',
+							'Initial support for copy/paste import and export of serialized JSON.',
+						],
+					},
+					{
+						version: '1.1.2.1',
+						date: '2010/08/25',
+						changes: [
+							'Emergency fix for restore bug in 1.1.2.',
+						],
+					},
+					{
+						version: '1.1.2',
+						date: '2010/08/14',
+						changes: [
+							'Addressed an issue with unescaped HTML entities in URLs.',
+							'Addressed a conflict when launching Safari from a link. If Sessions could potentially interfere with this behavior, the last session will instead be silently saved.',
+							'Option-clicking the Restore button will attempt to close all windows and Replace the current session.',
+							'Tabs can now be reordered within a session through drag and drop.',
+						],
+					},
+					{
+						version: '1.1.1',
+						date: '2010/07/30',
+						changes: [
+							'Added this changelog.',
+							'Improvements to automatic session backup, including saving on quit.',
+							'Clicking an individual window\'s title now restores it.',
+							'Enabled searching in all saved sessions.',
+							'Added optional global hotkey.',
+						],
+					},
+					{
+						version: '1.1',
+						date: '2010/07/18',
+						changes: [
+							'Undocumented prehistory.',
+						],
+					},
+					{
+						version: '1.0',
+						date: '2010/06/21',
+						changes: [
+							'Initial release.',
+						],
+					},
+				];
+
+				changelog.innerHTML = changes.reduce(function (lines, change) {
+					return lines.concat([
+						'<div class="change">',
+							'<div class="changeTitle">',
+								'<div class="version">',
+									change.version,
+								'</div>',
+								'<div class="date">',
+									change.date,
+								'</div>',
+							'</div>',
+							'<ul>',
+								change.changes.map(function (changeItem) {
+									return '<li>' + changeItem + '</li>';
+								}).join(''),
+							'</ul>',
+						'</div>',
+					]);
+				}, []).join('');
+
+				document.getElementById('changeToggle').addEventListener('click', function (event) {
+					event.preventDefault();
+					this.classList.toggle('header');
+					changelog.classList.toggle('show');
+				}, false);
+
+				setTimeout(function () {
+					var slider = document.getElementById('slider'),
+						returnSlide = slider.querySelector('#return'),
+						returnButton = returnSlide.querySelector('h1');
+
+					slider.addEventListener('click', function (event) {
+						var target = event.target,
+							slide;
+						while (target.nodeName !== 'FIGURE') {
+							target = target.parentNode;
+							if (target === this) {
+								return;
+							}
+						}
+						slide = target.dataset.slide;
+						if (this.className !== slide) {
+							if (target.nextElementSibling === returnSlide) {
+								returnButton.style.top = (event.clientY - returnSlide.getBoundingClientRect().top) + 'px';
+							}
+							this.className = slide;
+						}
+					}, false);
+
+					slider.addEventListener('keydown', function (event) {
+						var selected = this.querySelector('figure[data-slide="' + this.className + '"]'),
+							next;
+						if (!selected) {
+							return;
+						}
+						next =	((event.keyCode === 39) && selected.nextElementSibling) ||
+								((event.keyCode === 37) && selected.previousElementSibling);
+						if (!next) {
+							return;
+						}
+						if (next.nextElementSibling === returnSlide) {
+							returnButton.style.top = '';
+						}
+						event.preventDefault();
+						this.className = next.dataset.slide;
+					}, false);
+
+					slider.className = 'slide1';
+				}, 500);
+			}, false);
+		</script>
 	</body>
 </html>
