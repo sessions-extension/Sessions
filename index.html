@@ -73,7 +73,7 @@
 			}
 			#content {
 				max-width: 826px;
-				margin: 0px auto;
+				margin: 0 auto;
 				background: -webkit-gradient(linear, 0% 0%, 0% 888, from(rgba(248, 248, 248, 0)), to(rgba(248, 248, 248, .75))) left top no-repeat;
 				background: -webkit-linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
 				background: linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
@@ -88,7 +88,7 @@
 			}
 			#slider {
 				position: relative;
-				padding: 0px;
+				padding: 0;
 				outline: none;
 				height: 500px;
 				margin: 24px 56px 72px;
@@ -164,13 +164,13 @@
 			}
 			img {
 				border-radius: 5px;
-				box-shadow: 0 0px 1px rgba(0, 0, 0, .5);
+				box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 1px 2px rgba(0, 0, 0, .6);
 				-webkit-transition: box-shadow .3s;
 				transition: box-shadow .3s;
 				width: 960px;
 			}
 			figure:hover img {
-				box-shadow: 0 0px 1px rgba(0, 0, 0, .5), 0 2px 4px rgba(0, 0, 0, .535);
+				box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 3px 6px rgba(0, 0, 0, .535);
 			}
 			figcaption {
 				margin-top: .5em;
@@ -183,10 +183,14 @@
 				-webkit-transition: all .7s;
 				transition: all .7s;
 			}
+			.initial figure:not(:first-of-type) {
+				visibility: hidden;
+			}
 			.slide1 figure:nth-of-type(1),
 			.slide2 figure:nth-of-type(2),
 			.slide3 figure:nth-of-type(3),
-			.slide4 figure:nth-of-type(4) {
+			.slide4 figure:nth-of-type(4),
+			.slide5 figure:nth-of-type(5) {
 				-webkit-transform: translate3d(0%, 0%, 0%);
 				transform: translate3d(0%, 0%, 0%);
 			}
@@ -194,59 +198,76 @@
 			.slide1 figure:nth-of-type(1)::before,
 			.slide2 figure:nth-of-type(2)::before,
 			.slide3 figure:nth-of-type(3)::before,
-			.slide4 figure:nth-of-type(4)::before {
+			.slide4 figure:nth-of-type(4)::before,
+			.slide5 figure:nth-of-type(5)::before {
 				visibility: hidden;
 			}
 			.slide1 figure:nth-of-type(1) img,
 			.slide2 figure:nth-of-type(2) img,
 			.slide3 figure:nth-of-type(3) img,
-			.slide4 figure:nth-of-type(4) img {
-				box-shadow: 0 0px 1px rgba(0, 0, 0, .5), 0 24px 48px rgba(0, 0, 0, .535);
+			.slide4 figure:nth-of-type(4) img,
+			.slide5 figure:nth-of-type(5) img {
+				box-shadow: 0 0 1px rgba(0, 0, 0, .5), 0 24px 48px rgba(0, 0, 0, .535);
 			}
 			.slide1 figure:nth-of-type(1) figcaption,
 			.slide2 figure:nth-of-type(2) figcaption,
 			.slide3 figure:nth-of-type(3) figcaption,
-			.slide4 figure:nth-of-type(4) figcaption {
+			.slide4 figure:nth-of-type(4) figcaption,
+			.slide5 figure:nth-of-type(5) figcaption {
 				opacity: 1;
 				-webkit-transform: none;
 				transform: none;
 			}
 			.slide1 figure:nth-of-type(2),
 			.slide2 figure:nth-of-type(3),
-			.slide3 figure:nth-of-type(4) {
+			.slide3 figure:nth-of-type(4),
+			.slide4 figure:nth-of-type(5) {
 				-webkit-transform: translate3d(0, 0, -1px);
 				transform: translate3d(0, 0, -1px);
 			}
 			.slide1 figure:nth-of-type(3),
-			.slide2 figure:nth-of-type(4) {
+			.slide2 figure:nth-of-type(4),
+			.slide3 figure:nth-of-type(5) {
 				-webkit-transform: translate3d(0, 0, -2px);
 				transform: translate3d(0, 0, -2px);
 			}
-			.slide1 figure:nth-of-type(4) {
+			.slide1 figure:nth-of-type(4),
+			.slide2 figure:nth-of-type(5) {
 				-webkit-transform: translate3d(0, 0, -3px);
 				transform: translate3d(0, 0, -3px);
 			}
+			.slide1 figure:nth-of-type(5) {
+				-webkit-transform: translate3d(0, 0, -4px);
+				transform: translate3d(0, 0, -4px);
+			}
 			.slide2 figure:nth-of-type(1),
 			.slide3 figure:nth-of-type(2),
-			.slide4 figure:nth-of-type(3) {
+			.slide4 figure:nth-of-type(3),
+			.slide5 figure:nth-of-type(4) {
 				-webkit-transform: translate3d(-1008px, 0, 0);
 				transform: translate3d(-1008px, 0, 0);
 			}
 			.slide3 figure:nth-of-type(1),
-			.slide4 figure:nth-of-type(2) {
+			.slide4 figure:nth-of-type(2),
+			.slide5 figure:nth-of-type(3) {
 				-webkit-transform: translate3d(-2016px, 0, 0);
 				transform: translate3d(-2016px, 0, 0);
 			}
-			.slide4 figure:nth-of-type(1) {
+			.slide4 figure:nth-of-type(1),
+			.slide5 figure:nth-of-type(2) {
 				-webkit-transform: translate3d(-3024px, 0, 0);
 				transform: translate3d(-3024px, 0, 0);
 			}
-			.slide4 #return {
+			.slide5 figure:nth-of-type(1) {
+				-webkit-transform: translate3d(-4032px, 0, 0);
+				transform: translate3d(-4032px, 0, 0);
+			}
+			.slide5 #return {
 				opacity: 1;
 				-webkit-transform: translate3d(.5em, 0, 0);
 				transform: translate3d(.5em, 0, 0);
 			}
-			.slide4 #return h1 {
+			.slide5 #return h1 {
 				pointer-events: auto;
 			}
 			figure:nth-last-of-type(1) {
@@ -263,6 +284,9 @@
 			}
 			figure:nth-last-of-type(5) {
 				z-index: 5;
+			}
+			figure:nth-last-of-type(6) {
+				z-index: 6;
 			}
 			#changeToggle.header {
 				font-size: larger;
@@ -316,16 +340,17 @@
 					background-image: url('screens/unfocused-titlebar@2x.png');
 				}
 				img {
-					box-shadow: 0 0px 1px rgba(0, 0, 0, .9);
+					box-shadow: 0 0 1px rgba(0, 0, 0, .9), 0 1px 2px rgba(0, 0, 0, .6);
 				}
 				figure:hover img {
-					box-shadow: 0 0px 1px rgba(0, 0, 0, .9), 0 2px 4px rgba(0, 0, 0, .535);
+					box-shadow: 0 0 1px rgba(0, 0, 0, .9), 0 3px 6px rgba(0, 0, 0, .535);
 				}
 				.slide1 figure:nth-of-type(1) img,
 				.slide2 figure:nth-of-type(2) img,
 				.slide3 figure:nth-of-type(3) img,
-				.slide4 figure:nth-of-type(4) img {
-					box-shadow: 0 0px 1px rgba(0, 0, 0, .9), 0 24px 48px rgba(0, 0, 0, .535);
+				.slide4 figure:nth-of-type(4) img,
+				.slide5 figure:nth-of-type(5) img {
+					box-shadow: 0 0 1px rgba(0, 0, 0, .9), 0 24px 48px rgba(0, 0, 0, .535);
 				}
 			}
 		</style>
@@ -340,7 +365,7 @@
 				<figure data-slide="slide1">
 					<img src="screens/manager@1x.png" srcset="screens/manager@2x.png 2x" />
 					<figcaption>
-						A fast, intuitive interface.
+						Fast, intuitive interface.
 					</figcaption>
 				</figure>
 				<figure data-slide="slide2">
@@ -350,12 +375,18 @@
 					</figcaption>
 				</figure>
 				<figure data-slide="slide3">
+					<img src="screens/keyboard@1x.png" srcset="screens/keyboard@2x.png 2x" />
+					<figcaption>
+						Convenient keyboard support.
+					</figcaption>
+				</figure>
+				<figure data-slide="slide4">
 					<img src="screens/search@1x.png" srcset="screens/search@2x.png 2x" />
 					<figcaption>
 						Powerful tools to search and organize your tabs.
 					</figcaption>
 				</figure>
-				<figure data-slide="slide4">
+				<figure data-slide="slide5">
 					<img src="screens/export@1x.png" srcset="screens/export@2x.png 2x" />
 					<figcaption>
 						Save and restore. Drag and drop. Import and export.
