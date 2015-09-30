@@ -39,7 +39,7 @@
 			}
 			a:link, a:visited {
 				text-decoration: none;
-				color: #4F4F4F;
+				color: #444;
 				-webkit-transition: text-shadow .2s, color .2s;
 				transition: text-shadow .2s, color .2s;
 				-webkit-user-select: none;
@@ -52,7 +52,6 @@
 				padding: 3px 16px;
 			}
 			h4 a:hover {
-				color: #efefef;
 				color: #f8f8f8;
 				text-shadow: 0 .2em .32em rgba(32, 32, 32, .4), 0 .1em .15em rgba(0, 0, 0, .4);
 			}
@@ -99,6 +98,7 @@
 				-webkit-perspective: 6px;
 				perspective: 6px;
 				-webkit-transition: -webkit-transform .4s;
+				transition: transform .4s;
 			}
 			#slider.initial {
 				-webkit-transform: scale(.85);
@@ -148,7 +148,7 @@
 				border-radius: 50%;
 				pointer-events: none;
 				text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
-				box-shadow: inset 0 1px 2px rgba(0, 0, 0, .5);
+				box-shadow: inset 0 1px 2px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .1);
 				color: rgba(255, 255, 255, .5);
 				background: rgba(0, 0, 0, .1);
 			}
@@ -321,14 +321,14 @@
 			}
 			#tag {
 				position: absolute;
-				right: 2px;
-				bottom: 2px;
-				color: rgba(0, 0, 0, .2);
-				text-align: center;
+				right: 0;
+				top: 100%;
+				margin: .2em .4em;
+				color: rgba(255, 255, 255, .25);
 				font-size: smaller;
 			}
 			#tag span {
-				color: rgba(0, 0, 0, .3);
+				color: rgba(255, 255, 255, .4);
 			}
 			@media (-webkit-min-device-pixel-ratio: 2),
 					(min-resolution: 2dppx) {
@@ -397,7 +397,7 @@
 				</figure>
 			</div>
 			<p>Sessions keeps track of your open windows and tabs for you. With the click of a button you can save a snapshot of your session at any time and start fresh, secure in the knowledge that you can return to your tabs at your future leisure.</p>
-			<p>Sessions is efficient, lightweight, and gets out of your way; with automatic backups on startup enabled, you do not have to think about it until you need it. Every aspect of its design has been carefully considered and infused with familiar Mac sensibilities. And with Sessions's rich tab management and searching abilities, losing a link may be a thing of the past.</p>
+			<p>Sessions is efficient, lightweight, and gets out of your way; with automatic backups enabled, you do not have to think about it until you need it. Every aspect of its design has been carefully considered and infused with familiar Mac sensibilities. And with Sessions's rich tab management and searching abilities, losing a link may be a thing of the past.</p>
 			<h4>
 				<a href="update/Sessions.safariextz" title="Sessions requires Safari 5.1 or later">Download</a>
 			</h4>
@@ -427,6 +427,19 @@
 
 				var changelog = document.getElementById('changelog'),
 					changes = [
+					{
+						version: '1.4.1',
+						date: '2015/09/30',
+						changes: [
+							'Optional tab count badges for sessions in the sidebar.',
+							'Behavior when opening the session manager is now configurable.',
+							'More intuitive selection focus when deleting tabs from overview search.',
+							'Better font support for newer versions of OS X.',
+							'Workaround for tab restoration offset bug in Safari 9.',
+							'Disable dragging of search pane due to breakage in Safari 9.',
+							'Fix missing hover tooltips in overview.',
+						],
+					},
 					{
 						version: '1.4',
 						date: '2015/08/07',
@@ -639,7 +652,7 @@
 					}, false);
 
 					slider.className = 'slide1';
-				}, 500);
+				}, 250);
 			}, false);
 		</script>
 	</body>
