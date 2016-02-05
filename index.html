@@ -110,8 +110,8 @@
 				margin-left: -480px;
 				top: 0;
 				left: 50%;
-				-webkit-transition: all .4s;
-				transition: all .4s;
+				-webkit-transition: -webkit-transform .4s;
+				transition: transform .4s;
 			}
 			figure:not(#return)::before {
 				content: '';
@@ -128,8 +128,8 @@
 				height: 100%;
 				opacity: 0;
 				pointer-events: none;
-				-webkit-transition: all .4s;
-				transition: all .4s;
+				-webkit-transition: opacity .4s, -webkit-transform .4s;
+				transition: opacity .4s, transform .4s;
 			}
 			#return h1 {
 				width: 1.5em;
@@ -180,8 +180,8 @@
 				opacity: 0;
 				-webkit-transform: translateY(-100%);
 				transform: translateY(-100%);
-				-webkit-transition: all .7s;
-				transition: all .7s;
+				-webkit-transition: opacity .7s, -webkit-transform .7s;
+				transition: opacity .7s, transform .7s;
 			}
 			.initial figure:not(:first-of-type) {
 				visibility: hidden;
@@ -428,6 +428,17 @@
 				var changelog = document.getElementById('changelog'),
 					changes = [
 					{
+						version: '1.4.3',
+						date: '2016/02/05',
+						changes: [
+							'PNG assets replaced by resolution-independent SVG in newer Safari versions.',
+							'Adds inline mode for overview filter results.',
+							'Supports the newer Safari 9 Private Browsing API.',
+							'Removes previously deprecated HTML bookmark export.',
+							'Some polishing.',
+						],
+					},
+					{
 						version: '1.4.2',
 						date: '2015/10/30',
 						changes: [
@@ -622,49 +633,51 @@
 			window.addEventListener('load', function () {
 				'use strict';
 
+				var slider = document.getElementById('slider'),
+					returnSlide = slider.querySelector('#return'),
+					returnButton = returnSlide.querySelector('h1');
+
+				slider.addEventListener('click', function (event) {
+					var target = event.target,
+						slide;
+					while (target.nodeName !== 'FIGURE') {
+						target = target.parentNode;
+						if (target === this) {
+							return;
+						}
+					}
+					slide = target.dataset.slide;
+					if (this.className !== slide) {
+						if (target.nextElementSibling === returnSlide) {
+							returnButton.style.top = (event.clientY - returnSlide.getBoundingClientRect().top) + 'px';
+						}
+						this.className = slide;
+					}
+				}, false);
+
+				slider.addEventListener('keydown', function (event) {
+					var selected = this.querySelector('figure[data-slide="' + this.className + '"]'),
+						next;
+					if (!selected) {
+						return;
+					}
+					next =	((event.keyCode === 39) && selected.nextElementSibling) ||
+							((event.keyCode === 37) && selected.previousElementSibling);
+					if (!next) {
+						return;
+					}
+					if (next.nextElementSibling === returnSlide) {
+						returnButton.style.top = '';
+					}
+					event.preventDefault();
+					this.className = next.dataset.slide;
+				}, false);
+
 				setTimeout(function () {
-					var slider = document.getElementById('slider'),
-						returnSlide = slider.querySelector('#return'),
-						returnButton = returnSlide.querySelector('h1');
-
-					slider.addEventListener('click', function (event) {
-						var target = event.target,
-							slide;
-						while (target.nodeName !== 'FIGURE') {
-							target = target.parentNode;
-							if (target === this) {
-								return;
-							}
-						}
-						slide = target.dataset.slide;
-						if (this.className !== slide) {
-							if (target.nextElementSibling === returnSlide) {
-								returnButton.style.top = (event.clientY - returnSlide.getBoundingClientRect().top) + 'px';
-							}
-							this.className = slide;
-						}
-					}, false);
-
-					slider.addEventListener('keydown', function (event) {
-						var selected = this.querySelector('figure[data-slide="' + this.className + '"]'),
-							next;
-						if (!selected) {
-							return;
-						}
-						next =	((event.keyCode === 39) && selected.nextElementSibling) ||
-								((event.keyCode === 37) && selected.previousElementSibling);
-						if (!next) {
-							return;
-						}
-						if (next.nextElementSibling === returnSlide) {
-							returnButton.style.top = '';
-						}
-						event.preventDefault();
-						this.className = next.dataset.slide;
-					}, false);
-
 					slider.className = 'slide1';
 				}, 250);
+
+				slider.focus();
 			}, false);
 		</script>
 	</body>
