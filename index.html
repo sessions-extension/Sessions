@@ -428,6 +428,18 @@
 				var changelog = document.getElementById('changelog'),
 					changes = [
 					{
+						version: '1.5',
+						date: '2016/06/25',
+						changes: [
+							'Saved windows can be renamed by double-clicking or context-clicking their titles.',
+							'Search results can be filtered by field.',
+							'Now displays the total number of search results.',
+							'Improvements to global search performance and memory usage.',
+							'Updated sessions-export.sh.',
+							'Last round of bugs fixed.',
+						],
+					},
+					{
 						version: '1.4.5',
 						date: '2016/05/26',
 						changes: [
@@ -627,7 +639,7 @@
 				];
 
 				changelog.innerHTML = changes.reduce(function (lines, change) {
-					return lines.concat([
+					return lines.concat(
 						'<div class="change">',
 							'<div class="changeTitle">',
 								'<div class="version">',
@@ -640,10 +652,10 @@
 							'<ul>',
 								change.changes.map(function (changeItem) {
 									return '<li>' + changeItem + '</li>';
-								}).join(''),
+								}),
 							'</ul>',
-						'</div>',
-					]);
+						'</div>'
+					);
 				}, []).join('');
 
 				document.getElementById('changeToggle').addEventListener('click', function (event) {
