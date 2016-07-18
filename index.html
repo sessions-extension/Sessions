@@ -70,6 +70,9 @@
 			h6 a:hover:active {
 				color: #000;
 			}
+			li {
+				margin-bottom: .5em;
+			}
 			#content {
 				max-width: 826px;
 				margin: 0 auto;
@@ -288,21 +291,35 @@
 			figure:nth-last-of-type(6) {
 				z-index: 6;
 			}
-			#changeToggle.header {
+			.toggleActual {
+				display: none;
+			}
+			.toggle h6 {
+				color: #444;
+				margin-bottom: .75em;
+			}
+			.toggleHeader:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
+			.toggleHeader:hover:active {
+				color: #000;
+			}
+			.toggleActual:checked ~ h6 .toggleHeader {
 				font-size: larger;
 			}
-			#changelog {
+			.toggleContent {
 				width: 80%;
 				margin: auto;
 				border: solid rgba(0, 0, 0, .1);
 				border-width: 1px 0;
+				font-size: 14px;
+				color: #666;
 			}
-			#changelog:not(.show) {
+			.toggleActual:not(:checked) ~ .toggleContent {
 				display: none;
 			}
 			.change {
-				font-size: 14px;
-				color: #666;
 				padding: 1em;
 			}
 			.changeTitle {
@@ -365,7 +382,7 @@
 				<figure data-slide="slide1">
 					<img src="screens/manager@1x.png" srcset="screens/manager@2x.png 2x" />
 					<figcaption>
-						Fast, intuitive interface.
+						A fast, intuitive interface.
 					</figcaption>
 				</figure>
 				<figure data-slide="slide2">
@@ -401,10 +418,40 @@
 			<h4>
 				<a href="update/Sessions.safariextz" title="Sessions requires Safari 5.1 or later">Download</a>
 			</h4>
-			<h6>
-				<a href="#" id="changeToggle">Changelog</a>
-			</h6>
-			<div id="changelog"></div>
+			<div class="toggle">
+				<input type="checkbox" class="toggleActual" id="changeToggle" />
+				<h6>
+					<label for="changeToggle" class="toggleHeader">Changes</label>
+				</h6>
+				<div id="changelog" class="toggleContent">
+					<noscript>Javascript is utilized to show this change log.</noscript>
+				</div>
+			</div>
+			<div class="toggle">
+				<input type="checkbox" class="toggleActual" id="caveatToggle" />
+				<h6>
+					<label for="caveatToggle" class="toggleHeader">Caveats</label>
+				</h6>
+				<div class="toggleContent">
+					<ul>
+						<li>
+							<strong>Clearing Safari's history</strong>, resetting Safari, or otherwise deleting website data is likely to remove all extension data, including saved sessions. Do not do this lightly.
+						</li>
+						<li>
+							<strong>Installation under Safari 9</strong> may be prevented by a bug wherein clicking the "Trust" button to install an extension does nothing. This can be worked around by turning on full keyboard access in System Preferences, tabbing to the button, and pressing the spacebar to accept.
+						</li>
+						<li>
+							<strong>Automatic updates</strong> of Safari Extensions distributed outside the Gallery are disabled in Safari 9 and later. Users of non-current versions of Sessions must update manually from Safari Preferences. 
+						</li>
+						<li>
+							Some <strong>content blockers</strong> are known to cause problems with rendering and logic within Sessions. If you encounter strange behavior, try temporarily disabling any installed blockers to see if they are to blame.
+						</li>
+						<li>
+							My <strong>Safari Developer certificate</strong> has expired as of 2016/07/07. Sessions 1.5 is therefore the last version until further notice.
+						</li>
+					</ul>
+				</div>
+			</div>
 			<h6>
 				<!-- http://hivelogic.com/enkoder/ -->
 				<script>
@@ -425,8 +472,7 @@
 			window.addEventListener('DOMContentLoaded', function () {
 				'use strict';
 
-				var changelog = document.getElementById('changelog'),
-					changes = [
+				document.getElementById('changelog').innerHTML = [
 					{
 						version: '1.5',
 						date: '2016/06/25',
@@ -636,9 +682,7 @@
 							'Initial release.',
 						],
 					},
-				];
-
-				changelog.innerHTML = changes.reduce(function (lines, change) {
+				].reduce(function (lines, change) {
 					return lines.concat(
 						'<div class="change">',
 							'<div class="changeTitle">',
@@ -650,19 +694,13 @@
 								'</div>',
 							'</div>',
 							'<ul>',
-								change.changes.map(function (changeItem) {
-									return '<li>' + changeItem + '</li>';
-								}),
+								change.changes.reduce(function (list, changeItem) {
+									return list.concat('<li>', changeItem, '</li>');
+								}, []),
 							'</ul>',
 						'</div>'
 					);
 				}, []).join('');
-
-				document.getElementById('changeToggle').addEventListener('click', function (event) {
-					event.preventDefault();
-					this.classList.toggle('header');
-					changelog.classList.toggle('show');
-				}, false);
 			}, false);
 
 			window.addEventListener('load', function () {
