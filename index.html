@@ -26,9 +26,10 @@
 				text-align: center;
 				font-weight: 500;
 			}
-			#deprecation {
+			h5 {
 				text-align: center;
-				color: red;
+				margin: .5em;
+				color: #555;
 			}
 			h6 {
 				text-align: center;
@@ -91,6 +92,30 @@
 				height: 100px;
 				margin: 10px auto;
 				background: url('logo.png') center no-repeat;
+			}
+			#center {
+				text-align: center;
+			}
+			#export {
+				display: inline-block;
+				padding: .5em;
+				border-radius: .75em;
+				border: 1px solid transparent;
+				-webkit-transition: border-color .8s;
+				transition: border-color .8s;
+			}
+			#export:hover {
+				border-color: gray;
+				-webkit-transition: border-color .4s;
+				transition: border-color .4s;
+			}
+			#export:hover:active {
+				background-color: rgba(0, 0, 0, .02);
+				-webkit-box-shadow: inset 0 .1em .3em rgba(0, 0, 0, .6);
+				box-shadow: inset 0 .1em .3em rgba(0, 0, 0, .6);
+			}
+			#deprecation {
+				color: red;
 			}
 			#slider {
 				position: relative;
@@ -419,9 +444,14 @@
 			</div>
 			<p>Sessions keeps track of your open windows and tabs for you. With the click of a button you can save a snapshot of your session at any time and start fresh, secure in the knowledge that you can return to your tabs at your future leisure.</p>
 			<p>Sessions is efficient, lightweight, and gets out of your way; with automatic backups enabled, you do not have to think about it until you need it. Every aspect of its design has been carefully considered and infused with familiar Mac sensibilities. And with Sessions's rich tab management and searching abilities, losing a link may be a thing of the past.</p>
-			<h5 id="deprecation">Sessions will not install on Safari 12 or later, as Apple has officially deprecated Safari Extensions.</h5>
+			<div id="center">
+				<a id="export" href="export.html">
+					<h5 id="deprecation">Sessions will not install on Safari 12 or later, as Apple has officially deprecated Safari Extensions.</h5>
+					<h5>Click here for instructions on exporting your saved sessions.</h5>
+				</a>
+			</div>
 			<h4>
-				<a href="update/Sessions.safariextz" title="Sessions requires Safari 5.1 to Safari 11.1.1">Download</a>
+				<a href="update/Sessions.safariextz" title="Sessions requires Safari 5.1 to Safari 11.1.2">Download</a>
 			</h4>
 			<div class="toggle">
 				<input type="checkbox" class="toggleActual" id="changeToggle" />

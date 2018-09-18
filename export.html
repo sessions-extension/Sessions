@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Sessions Export</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: -apple-system, 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+				background: gray no-repeat;
+				background-image: -webkit-radial-gradient(50% 100px, 444px 666px, #f8f8f8 100px, gray 666px);
+				background-image: radial-gradient(ellipse 444px 666px at 50% 100px, #f8f8f8 100px, gray 666px);
+				/* It is impossible to replicate the old gradient (below) with the new syntax (above).*/
+				background-image: -webkit-gradient(radial, 50% 100, 100, 50% 222, 666, from(#F8F8F8), to(gray));
+				background-size: 100% 1110px;
+			}
+			h3 {
+				color: #333;
+				font-size: 18px;
+				text-align: center;
+				margin-bottom: 1.5em;
+			}
+			p, ol {
+				color: #444;
+				margin: 1em 1em;
+				font-size: 14px;
+				line-height: 18px;
+			}
+			#content {
+				max-width: 826px;
+				margin: 0 auto;
+				background: -webkit-gradient(linear, 0% 0%, 0% 888, from(rgba(248, 248, 248, 0)), to(rgba(248, 248, 248, .75))) left top no-repeat;
+				background: -webkit-linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
+				background: linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
+				padding: 40px 30px;
+				position: relative;
+			}
+			#logo {
+				width: 100px;
+				height: 100px;
+				margin: 10px auto;
+				background: url('logo.png') center no-repeat;
+			}
+			@media (-webkit-min-device-pixel-ratio: 2),
+					(min-resolution: 2dppx) {
+				#logo {
+					background: url('logo@2x.png') center no-repeat;
+					background-size: 100px 100px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<a href="index.html" title="Go home"><div id="logo"></div></a>
+			<h3>Sessions Export</h3>
+			<p>This page provides a shell script to export your saved sessions to a textual JSON format.</p>
+			<ol>
+				<li>
+					<a href="sessions-exporter.zip">Click here to download the <em>sessions-exporter.zip</em> archive.</a>
+				</li>
+				<li>Double-click the expanded <em>sessions-exporter.command</em> script.</li>
+				<li>Check that the output is as expected.</li>
+			</ol>
+			<p>If all goes accordingly, your saved sessions should be exported to a <em>sessions-XXXXXXXXXXXXXX.json</em> text file on your Desktop. Further steps (archival, conversion, importation, etc.) are up to you.</p>
+	</body>
+</html>
