@@ -2,44 +2,54 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Sessions Export</title>
+		<title>Sessions Exporter</title>
 		<style type="text/css">
 			body {
 				margin: 0;
 				padding: 0;
 				font-family: -apple-system, 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
-				background: gray no-repeat;
-				background-image: -webkit-radial-gradient(50% 100px, 444px 666px, #f8f8f8 100px, gray 666px);
-				background-image: radial-gradient(ellipse 444px 666px at 50% 100px, #f8f8f8 100px, gray 666px);
-				/* It is impossible to replicate the old gradient (below) with the new syntax (above).*/
-				background-image: -webkit-gradient(radial, 50% 100, 100, 50% 222, 666, from(#F8F8F8), to(gray));
-				background-size: 100% 1110px;
+				background-color: #181818;
+				-webkit-animation: Darken 1.2s;
+				animation: Darken 1.2s;
 			}
 			h3 {
-				color: #333;
+				color: #fff;
 				font-size: 18px;
 				text-align: center;
 				margin-bottom: 1.5em;
 			}
 			p, ol {
-				color: #444;
+				color: #ddd;
 				margin: 1em 1em;
 				font-size: 14px;
 				line-height: 18px;
 			}
+			a:link {
+				color: #3ef;
+			}
 			#content {
 				max-width: 826px;
 				margin: 0 auto;
-				background: -webkit-gradient(linear, 0% 0%, 0% 888, from(rgba(248, 248, 248, 0)), to(rgba(248, 248, 248, .75))) left top no-repeat;
-				background: -webkit-linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
-				background: linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .75) 888px);
-				padding: 40px 30px;
-				position: relative;
+				background: -webkit-gradient(linear, 0% 0%, 0% 888, from(rgba(248, 248, 248, 0)), to(rgba(248, 248, 248, .5))) left top no-repeat;
+				background: -webkit-linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .5) 888px);
+				background: linear-gradient(rgba(248, 248, 248, 0), rgba(248, 248, 248, .5) 888px);
+				padding: 150px 30px 40px;
+				opacity: 1;
+				-webkit-animation: Appear 1s;
+				animation: Appear 1s;
+			}
+			#ontop {
+				position: absolute;
+				top: 40px;
+				left: 0;
+				right: 0;
+				text-align: center;
 			}
 			#logo {
+				display: inline-block;
 				width: 100px;
 				height: 100px;
-				margin: 10px auto;
+				margin: 10px;
 				background: url('logo.png') center no-repeat;
 			}
 			@media (-webkit-min-device-pixel-ratio: 2),
@@ -49,12 +59,33 @@
 					background-size: 100px 100px;
 				}
 			}
+			@-webkit-keyframes Darken {
+				0% {	background-color: #ddd; }
+				33% {	background-color: #ddd; }
+				100% {	background-color: #181818; }
+			}
+			@keyframes Darken {
+				0% {	background-color: #ddd; }
+				33% {	background-color: #ddd; }
+				100% {	background-color: #181818; }
+			}
+			@-webkit-keyframes Appear {
+				0% {	opacity: 0; transform: translateY(-30px); }
+				33% {	opacity: 0; }
+				50% {	opacity: 1; }
+				100% {	transform: translateY(0); }
+			}
+			@keyframes Appear {
+				0% {	opacity: 0; transform: translateY(-30px); }
+				33% {	opacity: 0; }
+				50% {	opacity: 1; }
+				100% {	transform: translateY(0); }
+			}
 		</style>
 	</head>
 	<body>
 		<div id="content">
-			<a href="index.html" title="Go home"><div id="logo"></div></a>
-			<h3>Sessions Export</h3>
+			<h3>Sessions Exporter</h3>
 			<p>This page provides a shell script to export your saved sessions to a textual format.</p>
 			<ol>
 				<li>
@@ -83,5 +114,9 @@
 			",\\\\\\\"=\\\",o iar{vy)x,f(n ioctun\\\"f)\")"                               ;
 			while(x=eval(x));
 			</script>
+		</div>
+		<div id="ontop">
+			<a id="logo" href="index.html" title="Go home"></a>
+		</div>
 	</body>
 </html>
